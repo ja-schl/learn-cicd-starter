@@ -9,32 +9,32 @@ import (
 
 func TestGetAPIKey(t *testing.T) {
 	tests := map[string]struct {
-		key string
-		val string
+		key     string
+		val     string
 		wantOut string
 		wantErr error
 	}{
 		"Valid header": {
-			key: "Authorization",
-			val: "ApiKey abcd",
+			key:     "Authorization",
+			val:     "ApiKey abcd",
 			wantOut: "abcd",
 			wantErr: nil,
 		},
 		"No Auth Header": {
-			key: "",
-			val: "ApiKey abcd",
+			key:     "",
+			val:     "ApiKey abcd",
 			wantOut: "",
 			wantErr: ErrNoAuthHeaderIncluded,
 		},
 		"Malformed Auth Header 1": {
-			key: "Authorization",
-			val: "abcd",
+			key:     "Authorization",
+			val:     "abcd",
 			wantOut: "",
 			wantErr: errors.New("malformed authorization header"),
 		},
 		"Malformed Auth Header 2": {
-			key: "Authorization",
-			val: "Bearer abcd",
+			key:     "Authorization",
+			val:     "Bearer abcd",
 			wantOut: "",
 			wantErr: errors.New("malformed authorization header"),
 		},
@@ -45,7 +45,7 @@ func TestGetAPIKey(t *testing.T) {
 			headers := http.Header{}
 			headers.Add(tc.key, tc.val)
 			got, err := GetAPIKey(headers)
-			if err != nil  {
+			if err != nil {
 				if err.Error() == tc.wantErr.Error() {
 					return
 				}
