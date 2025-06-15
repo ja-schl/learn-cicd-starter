@@ -35,3 +35,6 @@ jobs:
 
       - name: Check Style
         run: test -z $(go fmt ./...)
+      
+      - name: Staticcheck code
+        uses: dominikh/staticcheck-action@v1
